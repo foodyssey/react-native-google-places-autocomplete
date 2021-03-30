@@ -141,6 +141,7 @@ export const GooglePlacesAutocomplete = forwardRef((props, ref) => {
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
   useEffect(() => {
     // Update dataSource if props.predefinedPlaces changed
     setDataSource(buildRowsFromResults([])) 
@@ -531,9 +532,12 @@ export const GooglePlacesAutocomplete = forwardRef((props, ref) => {
   // eslint-disable-next-line react-hooks/exhaustive-deps
   const debounceData = useMemo(() => debounce(_request, props.debounce), [props.query]);
 
+  useEffect(() => {
+    debounceData(stateText)
+  }, [stateText])
+
   const _onChangeText = (text) => {
     setStateText(text);
-    debounceData(text);
   };
 
   const _handleChangeText = (text) => {
